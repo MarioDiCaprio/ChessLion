@@ -4,7 +4,7 @@ import Base from './base';
 
 export default function Home(props) {
     return (
-        <Base>
+        <Base activeLinkKey="home">
             <div>
                 Hello
             </div>
