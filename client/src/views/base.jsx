@@ -9,7 +9,7 @@ function Navbar(props) {
     }
 
     const links = [
-        <a key="home" className={getLinkClassName('home')} href="/home">Home</a>,
+        <a key="home" className={getLinkClassName('home')} href="/">Home</a>,
         <a key="openings" className={getLinkClassName('openings')} href="/openings">Openings</a>,
         <a key="analysis" className={getLinkClassName('analysis')} href="/analysis">Analysis</a>,
         <a key="play" className={getLinkClassName('play')} href="/play">Play</a>,
@@ -17,7 +17,7 @@ function Navbar(props) {
     ];
 
     return (
-        <nav id="navbar" className="navbar navbar-expand-sm  navbar-dark bg-dark">
+        <nav id="navbar" className="navbar navbar-expand-sm  navbar-light bg-light">
             <div className="container-fluid">
                 <div className="navbar-brand hstack gap-2">
                     <img alt="" src={process.env.PUBLIC_URL + '/logo512.png'} style={{width: '50px', height: '50px'}}/>

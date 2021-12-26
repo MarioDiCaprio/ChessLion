@@ -1,0 +1,29 @@
+$text-size: 22px;
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+p > ul {
+    margin: 15px;
+}
+
+.context {
+    margin: 10px 150px 100px 100px;
+}
+
+.stdText {
+    font-family: 'Zilla Slab', 'Rasa', serif;
+    font-size: $text-size;
+    color: rgb(68, 68, 68);
+}
+
+.chessText {
+    font-family: 'Fira Code', monospace;
+    font-size: $text-size;
+}
+
+#openings-sidebar {
+    font-size: $text-size * 0.85;
+    width: 400px;
+}
