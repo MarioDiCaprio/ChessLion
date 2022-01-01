@@ -19,11 +19,14 @@ p > ul {
 }
 
 .chessText {
-    font-family: 'Fira Code', monospace;
-    font-size: $text-size;
+    font-family: 'Roboto Slab', serif;
+    font-size: $text-size * 0.9;
+    font-weight: bold;
+    color: rgb(68, 68, 68);
 }
 
 #openings-sidebar {
     font-size: $text-size * 0.85;
-    width: 400px;
+    min-width: 300px;
+    max-width: 300px;
 }
