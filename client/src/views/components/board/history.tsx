@@ -1,4 +1,6 @@
 import Pgn from '../../../utils/pgn/pgnParser';
+import './history.scss';
+
 
 /**
  * This interface contains all the props of the component 'MoveHistory'.
@@ -11,6 +13,8 @@ import Pgn from '../../../utils/pgn/pgnParser';
 export interface MoveHistoryProps {
     /** The array containing all moves (e.g. ['e4', 'e5', { move: 'Nf3', glyph: '?!' }, 'Nf6']) */
     pgn?: Pgn;
+    /** The starting round of the PGN */
+    startingMove?: number;
     /** An optional key of the selected move (e.g. '2w') */
     selectedMoveKey?: string;
     /**
@@ -29,15 +33,18 @@ export interface MoveHistoryProps {
  */
 const MoveHistory: React.FC<MoveHistoryProps> = ({
     pgn = new Pgn(),
+    startingMove = 1,
     selectedMoveKey = undefined,
     onMoveClicked = undefined,
 }: MoveHistoryProps) => {
 
-    // move colors based on glyphs
+    // css class based on glyphs
     const glyphColor: { [key: string]: string } = {
-        '?': 'rgb(235, 207, 0)',
-        '??': 'rgb(255, 79, 56)',
-        '!?': 'rgb(45, 187, 252)',
+        '?': 'mistake',
+        '??': 'blunder',
+        '?!': 'inaccuracy',
+        '!': 'good',
+        '!!': 'excellent',
     }
 
     // complete history
@@ -50,26 +57,26 @@ const MoveHistory: React.FC<MoveHistoryProps> = ({
     for (let i = 0; i < pgn.moves.length; i++) {
         for (let j=0; j<2; j++) {
             let move = pgn.moves[i][j];
-            let color: string = 'rgb(100, 100, 100)';
-            let border: string = 'transparent';
+            let css: string = 'regular';
             let text: string;
             let key: string = (j === 0) ? roundNum + 'w' : roundNum + 'b';
 
-            // break if move is undefined (only the case when white's move was the last one in the game)
+            // break if move is undefined (only the case when white moved last, since black's move is 'undefined')
             if (move.move === undefined) {
+                round.push(<td key={roundNum + 'b'}></td>);
                 break;
             }
             // select color based on glyph
-            if (move.glyph !== undefined && move.glyph in glyphColor) {
-                text = move + move.glyph;
-                color = glyphColor[move.glyph];
+            if (move.glyph !== undefined) {
+                text = move.move + move.glyph;
+                if (move.glyph in glyphColor)
+                    css += ' ' + glyphColor[move.glyph];
             } else {
                 text = move.move;
             }
 
-            // select additional border if this move is selected
             if (selectedMoveKey === key) {
-                border = color;
+                css += ' active';
             }
 
             // triggered when this move gets clicked
@@ -82,10 +89,8 @@ const MoveHistory: React.FC<MoveHistoryProps> = ({
 
             // add JSX to temp variable
             round.push(
-                <td key={key}>
-                    <button className="btn" style={{ color: color, borderColor: border }} onClick={moveClicked}>
-                        {text}
-                    </button>
+                <td key={key} className={css} onClick={moveClicked}>
+                    {text}
                 </td>
             );
         }
@@ -93,7 +98,9 @@ const MoveHistory: React.FC<MoveHistoryProps> = ({
         // add temp variable to table, rinse and repeat
         history.push(
             <tr key={roundNum}>
-                <th key={roundNum + 'w'} scope="row">{roundNum++}</th>
+                <th key={roundNum + 'w'} scope="row">
+                    <div>{startingMove - 1 + roundNum++}</div>
+                </th>
                 {round}
             </tr>
         );

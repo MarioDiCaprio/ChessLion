@@ -9,20 +9,26 @@ p > ul {
 }
 
 .context {
-    margin: 10px 150px 100px 100px;
+    padding: 10px 150px 100px 100px;
+    p {
+        @extend .stdText;
+    }
+    span {
+        @extend .chessText;
+    }
 }
 
 .stdText {
     font-family: 'Zilla Slab', 'Rasa', serif;
     font-size: $text-size;
-    color: rgb(68, 68, 68);
+    color: rgb(104, 104, 104);
 }
 
 .chessText {
     font-family: 'Roboto Slab', serif;
     font-size: $text-size * 0.9;
-    font-weight: bold;
-    color: rgb(68, 68, 68);
+    font-weight: lighter;
+    color: rgb(95, 94, 94);
 }
 
 #openings-sidebar {
