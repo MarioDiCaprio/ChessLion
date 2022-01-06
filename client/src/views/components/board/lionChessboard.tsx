@@ -18,6 +18,8 @@ class ChessboardState {
     table: LinearTable<{ move: Move, fen: string }> = new LinearTable(2);
     /** The index of the currently selected move in the history */
     selectedMove: [number, 0 | 1] = [-1, 1];
+    /** The starting FEN position */
+    fen!: string | undefined;
     /** The chess.js object to verify the legality of a move */
     // @ts-ignore
     game!: Chess;
@@ -34,6 +36,7 @@ class ChessboardState {
         historyLocked: true
     }) {
         this.props = props;
+        this.fen = fen;
         // @ts-ignore
         this.game = Chess(fen);
         if (typeof pgn === 'string')
@@ -77,7 +80,7 @@ class ChessboardState {
     selectedFen = (): string | undefined => {
         const [round, side] = this.selectedMove;
         const cell =  this.table.get(round, side);
-        return (cell === null)? undefined : cell.fen;
+        return (cell === null)? this.fen : cell.fen;
     }
 
     /**
