@@ -34,6 +34,7 @@ public class Registration {
      * this login is considered invalid and valid if no match was found. Also,
      * if no match was found the given data is saved in the database.
      * @param username The username to log in with
+     * @param email The email to associate with the username
      * @param password The password to log in with
      */
     public Registration(String username, String email, String password) {

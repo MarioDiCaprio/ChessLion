@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 /**
  * This entity is a subclass of {@link Player}. This class references all users
- * of the 'LionChess' website. Therefore, it extends its parent's functionality
+ * of this website. Therefore, it extends its parent's functionality
  * by adding the following properties:
  * <ul>
  *     <li>A unique username</li>
