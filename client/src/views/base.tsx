@@ -16,7 +16,7 @@ const Navbar: React.FC<NavbarProps> = props => {
         <a key="openings" className={getLinkClassName('openings')} href="/openings">Openings</a>,
         <a key="analysis" className={getLinkClassName('analysis')} href="/analysis">Analysis</a>,
         <a key="play" className={getLinkClassName('play')} href="/play">Play</a>,
-        <a key="about" className={getLinkClassName('about')} href="/about">About</a>
+        <a key="login" className={getLinkClassName('login')} href="/login">Login</a>
     ];
 
     return (

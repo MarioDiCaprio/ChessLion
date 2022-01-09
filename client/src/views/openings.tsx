@@ -21,7 +21,7 @@ const Sidebar: React.FC = () => {
 const OpeningBase: React.FC = props => {
     return (
         <Base activeLinkKey="openings">
-            <div className="container-fluid d-flex mx-1 my-4">
+            <div className="container-fluid d-flex px-2 my-4">
                 <Sidebar />
                 {props.children}
             </div>

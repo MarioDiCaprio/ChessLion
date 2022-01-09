@@ -1,0 +1,93 @@
+$mistake-color: rgb(255, 239, 119);
+$blunder-color: rgb(253, 107, 87);
+$inaccuracy-color: rgb(108, 205, 250);
+$good-color: rgb(101, 246, 144);
+$excellent-color: rgb(50, 237, 159);
+$regular-color: rgb(100, 100, 100);
+$active-text-color: white;
+
+
+th {
+    div {
+        margin: 10px;
+    }
+}
+
+td {
+    min-width: 75px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.regular {
+    color: $regular-color;
+    &:hover {
+        color: $active-text-color;
+        background: lighten($color: $regular-color, $amount: 50%);
+    }
+    &.active {
+        color: $active-text-color;
+        background: lighten($color: $regular-color, $amount: 40%);
+    }
+}
+
+.mistake {
+    color: $mistake-color;
+    &:hover {
+        color: $active-text-color;
+        background: lighten($color: $mistake-color, $amount: 10%);
+    }
+    &.active {
+        color: $active-text-color;
+        background: $mistake-color;
+    }
+}
+
+.blunder {
+    color: $blunder-color;
+    &:hover {
+        color: $active-text-color;
+        background: lighten($color: $blunder-color, $amount: 10%);
+    }
+    &.active {
+        color: $active-text-color;
+        background: $blunder-color;
+    }
+}
+
+.inaccuracy {
+    color: $inaccuracy-color;
+    &:hover {
+        color: $active-text-color;
+        background: lighten($color: $inaccuracy-color, $amount: 10%);
+    }
+    &.active {
+        color: $active-text-color;
+        background: $inaccuracy-color;
+    }
+}
+
+.good {
+    color: $good-color;
+    &:hover {
+        color: $active-text-color;
+        background: lighten($color: $good-color, $amount: 10%);
+    }
+    &.active {
+        color: $active-text-color;
+        background: $good-color;
+    }
+}
+
+.excellent {
+    color: $excellent-color;
+    &:hover {
+        color: $active-text-color;
+        background: lighten($color: $excellent-color, $amount: 10%);
+    }
+    &.active {
+        color: $active-text-color;
+        background: $excellent-color;
+    }
+}

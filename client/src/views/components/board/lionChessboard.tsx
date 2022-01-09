@@ -18,6 +18,8 @@ class ChessboardState {
     table: LinearTable<{ move: Move, fen: string }> = new LinearTable(2);
     /** The index of the currently selected move in the history */
     selectedMove: [number, 0 | 1] = [-1, 1];
+    /** The starting FEN position */
+    fen!: string | undefined;
     /** The chess.js object to verify the legality of a move */
     // @ts-ignore
     game!: Chess;
@@ -34,6 +36,7 @@ class ChessboardState {
         historyLocked: true
     }) {
         this.props = props;
+        this.fen = fen;
         // @ts-ignore
         this.game = Chess(fen);
         if (typeof pgn === 'string')
@@ -62,7 +65,7 @@ class ChessboardState {
             // @ts-ignore
             moves: this.table.matrix.map(row => row.map(x => {
                 if (x !== null)
-                    return { move: x.move.move, glyph: undefined, comment: undefined };
+                    return x.move;
                 else
                     return { move: undefined, glyph: undefined, comment: undefined };
             }))
@@ -77,7 +80,7 @@ class ChessboardState {
     selectedFen = (): string | undefined => {
         const [round, side] = this.selectedMove;
         const cell =  this.table.get(round, side);
-        return (cell === null)? undefined : cell.fen;
+        return (cell === null)? this.fen : cell.fen;
     }
 
     /**
@@ -181,6 +184,8 @@ export interface LionChessboardProps {
     historyLocked?: boolean;
     /** An optional PGN game */
     pgn?: string;
+    /** The round the PGN starts with */
+    startingMove?: number;
     /** The size of the board in pixels */
     size?: number;
 }
@@ -199,6 +204,7 @@ const LionChessboard: React.FC<LionChessboardProps> = ({
         showHistoryButtons = false,
         historyLocked = false,
         pgn = undefined,
+        startingMove = 1,
         size = 500,
     }: LionChessboardProps) => {
 
@@ -206,7 +212,6 @@ const LionChessboard: React.FC<LionChessboardProps> = ({
         historyLocked: historyLocked
     }));
 
-    // legal moves only
     function onPieceDrop(square1: Square, square2: Square): boolean {
         const tmp = state.addMoveUci(square1, square2, 'q');
         if (tmp) {
@@ -216,6 +221,7 @@ const LionChessboard: React.FC<LionChessboardProps> = ({
         return false;
     }
 
+    // executes the given function and re-renders the board
     function doAndUpdate(f: () => any): any {
         f();
         setState({...state});
@@ -246,15 +252,10 @@ const LionChessboard: React.FC<LionChessboardProps> = ({
             </div>
             {
                 showHistory &&
-                <div style={{
-                    width: size * 0.65,
-                    minHeight: size,
-                    maxHeight: size,
-                    overflowY: 'scroll',
-                    overflowX: 'hidden',
-                }}>
+                <div style={{maxHeight: size, overflowY: 'scroll'}}>
                     <MoveHistory
                     pgn={ new Pgn( state.getPgn() ) }
+                    startingMove={ startingMove }
                     selectedMoveKey={state.getSelectedMoveKey()}
                     onMoveClicked={(round, side) => doAndUpdate( () => state.selectMove(round, side) )}
                     />
