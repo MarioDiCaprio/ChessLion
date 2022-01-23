@@ -1,7 +1,9 @@
 import $ from 'jquery';
 import jQuery from 'jquery';
 import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import Base from "./base";
+import { setLoginData } from '../redux/slices/login';
 import { SERVER_ADDRESS } from '../settings';
 import { formValidation } from '../utils/html/formUtils';
 import './login.scss';
@@ -9,6 +11,8 @@ import './login.scss';
 
 // This class is used as a wrapper and contains the main functionality
 const LoginBase: React.FC = props => {
+    const dispatch = useDispatch()
+
     useEffect(() => {
         jQuery(() => {
             // switch tabs (login/register)
@@ -129,7 +133,10 @@ const LoginBase: React.FC = props => {
                             dataType: 'json',
                             success: response => {
                                 if (response.valid) {
-                                    alert('Login Successful');
+                                    dispatch(setLoginData({
+                                        username: '' + args['username'].val,
+                                        password: '' + args['password'].val,
+                                    }))
                                 }
                                 else {
                                     args['username'].removeClass('is-valid');

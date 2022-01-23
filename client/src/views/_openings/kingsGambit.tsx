@@ -27,7 +27,7 @@ export const Intro: React.FC = () => {
                 and central control. It starts with the moves <span className="chessText">1. e4 e5 2. f4</span>,
                 immediately giving up the f-pawn in order to take in the center. White will be looking forward to
                 castling on the king's side and developing as quickly as possible. Black has four ways of responding:
-                <ul>
+                <ul className='stdText'>
                     <li>Accepting the gambit and returning the pawn</li>
                     <li>Accepting the gambit and holding on to the pawn</li>
                     <li>Declining the gambit</li>

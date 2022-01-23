@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
+    "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -17,9 +18,11 @@
     "react": "^17.0.2",
     "react-chessboard": "^1.0.1",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.0",
+    "redux": "^4.1.2",
     "typescript": "^4.5.4",
     "web-vitals": "^2.1.2"
   },
@@ -51,6 +54,7 @@
     "@types/antlr4": "^4.7.2",
     "@types/chess.js": "^0.11.2",
     "@types/jquery": "^3.5.11",
+    "@types/react-redux": "^7.1.22",
     "sass": "^1.45.1"
   }
 }

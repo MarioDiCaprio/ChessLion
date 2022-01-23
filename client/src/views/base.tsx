@@ -1,5 +1,7 @@
 import React from 'react';
-import "./base.scss";
+import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
+import './base.scss';
 
 
 interface NavbarProps {
@@ -7,6 +9,8 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = props => {
+    const loginInfo = useSelector((state: RootState) => state.login)
+
     function getLinkClassName(linkKey: string): string {
         return (linkKey === props.activeLinkKey)? 'nav-link active' : 'nav-link';
     }
@@ -16,8 +20,12 @@ const Navbar: React.FC<NavbarProps> = props => {
         <a key="openings" className={getLinkClassName('openings')} href="/openings">Openings</a>,
         <a key="analysis" className={getLinkClassName('analysis')} href="/analysis">Analysis</a>,
         <a key="play" className={getLinkClassName('play')} href="/play">Play</a>,
-        <a key="login" className={getLinkClassName('login')} href="/login">Login</a>
     ];
+
+    let accountLink =   (loginInfo.username === undefined)?
+                        <a key="login" className={getLinkClassName('login')} href="/login">Login</a>
+                        :
+                        <a key="account" className={getLinkClassName('account')} href="/login">Account</a>
 
     return (
         <nav id="navbar" className="navbar navbar-expand-sm  navbar-light bg-light">
@@ -28,6 +36,9 @@ const Navbar: React.FC<NavbarProps> = props => {
                 </div>
                 <div className="navbar-nav">
                     {links}
+                </div>
+                <div className="navbar-nav">
+                    {accountLink}
                 </div>
             </div>
         </nav>
