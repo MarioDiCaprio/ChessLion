@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import Base from './base';
 import * as KingsGambit from './_openings/kingsGambit';
 import './openings.scss';
@@ -9,7 +9,9 @@ const Sidebar: React.FC = () => {
     return (
         <nav id="openings-sidebar" className="nav flex-column">
             <div className="nav-item">
-                <a className="nav-link" href="/openings">Index</a>
+                <Link className="nav-link" to="/openings">
+                    Index
+                </Link>
             </div>
             <hr />
             <KingsGambit.Sidebar />

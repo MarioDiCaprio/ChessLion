@@ -39,8 +39,7 @@ public class Login {
         this.password = password;
 
         var tmp = new Object() { public boolean result = false; };
-        DatabaseManager.simpleSession(session -> {
-            session.beginTransaction();
+        DatabaseManager.simpleSessionWithTransaction(session -> {
             List<?> q =session.createSQLQuery(
                     "SELECT * FROM LionPlayer " +
                     "WHERE username='" + username + "' AND password='" + password + "';"
@@ -50,7 +49,6 @@ public class Login {
                 if (obj.getUsername().equals(username) && obj.getPassword().equals(password))
                     tmp.result = true;
             }
-            return null;
         });
 
         this.isValid = tmp.result;

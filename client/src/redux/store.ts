@@ -1,15 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-import loginReducer from './slices/login';
+import { chesslionApi } from "./providers/chesslionApi";
+import loginCredentials from "./slices/loginCredentials";
 
 
 const store = configureStore({
     reducer: {
-        login: loginReducer
-    }
+        loginCredentials: loginCredentials,
+        [chesslionApi.reducerPath]: chesslionApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+                getDefaultMiddleware().concat(chesslionApi.middleware)
 });
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

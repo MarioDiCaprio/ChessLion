@@ -19,7 +19,7 @@ public class DatabaseTests {
         boolean success = true;
         try {
             // initializes session factory + tables
-            DatabaseManager.simpleSession(session -> null);
+            DatabaseManager.simpleSession(session -> {});
         } catch (Exception e) {
             e.printStackTrace();
             success = false;

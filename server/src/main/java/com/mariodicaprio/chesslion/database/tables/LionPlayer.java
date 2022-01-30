@@ -1,8 +1,7 @@
 package com.mariodicaprio.chesslion.database.tables;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 
 /**
@@ -13,9 +12,11 @@ import javax.persistence.Entity;
  *     <li>A unique username</li>
  *     <li>An email</li>
  *     <li>A password (encrypted)</li>
+ *     <li>Additional user data</li>
  * </ul>
  * @see Player
  * @see ChessPlayer
+ * @see UserData
  */
 @Entity
 public class LionPlayer extends Player {
@@ -81,6 +82,28 @@ public class LionPlayer extends Player {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    //////////////////////////////////////////////////////////////
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "userDataId")
+    private UserData userData;
+
+    /**
+     * Retrieves this user's data.
+     * @return The user's data
+     */
+    public UserData getUserData() {
+        return userData;
+    }
+
+    /**
+     * Sets this user's data.
+     * @param userData The user's data
+     */
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 
 }

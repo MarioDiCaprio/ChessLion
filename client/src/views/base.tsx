@@ -1,6 +1,7 @@
 import React from 'react';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import './base.scss';
 
 
@@ -9,23 +10,25 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = props => {
-    const loginInfo = useSelector((state: RootState) => state.login)
+    const loginInfo = useSelector((state: RootState) => state.loginCredentials)
 
     function getLinkClassName(linkKey: string): string {
         return (linkKey === props.activeLinkKey)? 'nav-link active' : 'nav-link';
     }
 
-    const links = [
-        <a key="home" className={getLinkClassName('home')} href="/">Home</a>,
-        <a key="openings" className={getLinkClassName('openings')} href="/openings">Openings</a>,
-        <a key="analysis" className={getLinkClassName('analysis')} href="/analysis">Analysis</a>,
-        <a key="play" className={getLinkClassName('play')} href="/play">Play</a>,
-    ];
+    const links = (
+        <div className="d-flex gap-2">
+            <Link to="/" className={getLinkClassName('home')}>Home</Link>
+            <Link to="/openings" className={getLinkClassName('openings')}>Openings</Link>
+            <Link to="/analysis" className={getLinkClassName('analysis')}>Analysis</Link>
+            <Link to="/play" className={getLinkClassName('play')}>Play</Link>
+        </div>
+    );
 
-    let accountLink =   (loginInfo.username === undefined)?
-                        <a key="login" className={getLinkClassName('login')} href="/login">Login</a>
+    let accountLink =   (loginInfo.username === null || loginInfo.username === undefined)?
+                        <Link to="/login" className={getLinkClassName('login')}>Login</Link>
                         :
-                        <a key="account" className={getLinkClassName('account')} href="/login">Account</a>
+                        <Link to="/account" className={getLinkClassName('account')}>Account</Link>
 
     return (
         <nav id="navbar" className="navbar navbar-expand-sm  navbar-light bg-light">

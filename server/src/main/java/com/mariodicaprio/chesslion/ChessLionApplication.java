@@ -16,7 +16,7 @@ public class ChessLionApplication {
 	 */
 	public static void main(String[] args) {
 		// TODO This method call recreates the whole database. Implement proper testing!
-		DatabaseManager.simpleSession(s -> null);
+		DatabaseManager.simpleSession(s -> {});
 		SpringApplication.run(ChessLionApplication.class, args);
 	}
 

@@ -68,7 +68,7 @@ public class Rating {
     ////////////////////////////////////////////////////////
 
     @Column(name = "bullet")
-    private int bullet;
+    private int bullet = 1400;
 
     /**
      * Retrieves the bullet rating.
@@ -90,7 +90,7 @@ public class Rating {
 
 
     @Column(name = "blitz")
-    private int blitz;
+    private int blitz = 1400;
 
     /**
      * Retrieves the blitz rating.
@@ -111,7 +111,7 @@ public class Rating {
     ////////////////////////////////////////////////////////
 
     @Column(name = "rapid")
-    private int rapid;
+    private int rapid = 1400;
 
     /**
      * Retrieves the rapid rating.
@@ -132,7 +132,7 @@ public class Rating {
     ////////////////////////////////////////////////////////
 
     @Column(name = "classic")
-    private int classic;
+    private int classic = 1400;
 
     /**
      * Retrieves the classic rating.

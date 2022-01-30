@@ -1,5 +1,6 @@
 import React from 'react';
 import LionChessboard from '../components/board/lionChessboard';
+import { Link } from 'react-router-dom';
 import '../openings.scss';
 import './board.scss';
 
@@ -7,11 +8,13 @@ import './board.scss';
 export const Sidebar: React.FC = () => {
     return (
         <div>
-            <a className="nav-link" href="/openings/kings_gambit">King's Gambit</a>
+            <Link className="nav-link" to="/openings/kings_gambit">
+                King's Gambit
+            </Link>
             <div className="mx-4">
-                <a className='nav-link' href="/openings/kings_gambit/kieseritzky">
+                <Link className="nav-link" to="/openings/kings_gambit/kieseritzky">
                     Kieseritzky Variation
-                </a>
+                </Link>
             </div>
         </div>
     );

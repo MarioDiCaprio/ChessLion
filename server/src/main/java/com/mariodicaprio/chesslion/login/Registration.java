@@ -2,6 +2,8 @@ package com.mariodicaprio.chesslion.login;
 
 import com.mariodicaprio.chesslion.database.DatabaseManager;
 import com.mariodicaprio.chesslion.database.tables.LionPlayer;
+import com.mariodicaprio.chesslion.database.tables.Rating;
+import com.mariodicaprio.chesslion.database.tables.UserData;
 
 import java.util.List;
 
@@ -43,23 +45,24 @@ public class Registration {
         this.password = password;
 
         var tmp = new Object() { public boolean result = true; };
-        DatabaseManager.simpleSession(session -> {
-            session.beginTransaction();
+        DatabaseManager.simpleSessionWithTransaction(session -> {
             List<?> users = session.createSQLQuery(
                     "SELECT * FROM LionPlayer WHERE username='" + username + "';"
             ).getResultList();
             if (users.size() > 0) {
                 tmp.result = false;
             } else {
+                Rating rating = new Rating();
+                UserData data = new UserData();
                 LionPlayer p = new LionPlayer();
+
                 p.setUsername(username);
                 p.setEmail(email);
                 p.setPassword(password);
+                p.setRating(rating);
+                p.setUserData(data);
                 session.save(p);
-                session.getTransaction().commit();
             }
-            session.close();
-            return null;
         });
         this.isValid = tmp.result;
     }

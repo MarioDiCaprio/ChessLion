@@ -3,15 +3,17 @@ import jQuery from 'jquery';
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import Base from "./base";
-import { setLoginData } from '../redux/slices/login';
-import { SERVER_ADDRESS } from '../settings';
+import { setLoginCredentials } from '../redux/slices/loginCredentials';
 import { formValidation } from '../utils/html/formUtils';
+import { useLoginMutation, useRegisterMutation } from '../redux/providers/chesslionApi';
 import './login.scss';
 
 
 // This class is used as a wrapper and contains the main functionality
 const LoginBase: React.FC = props => {
     const dispatch = useDispatch()
+    const [login] = useLoginMutation();
+    const [register] = useRegisterMutation();
 
     useEffect(() => {
         jQuery(() => {
@@ -68,30 +70,25 @@ const LoginBase: React.FC = props => {
                         'passwordC': args => args['password'].val() === args['passwordC'].val()
                     },
                     onValid: args => {
-                        let username = args['username'].val();
-                        let email = args['email'].val();
-                        let password = args['password'].val();
-                        $.ajax({
-                            url: SERVER_ADDRESS + '/registration',
-                            data: {
-                                'username': username,
-                                'email': email,
-                                'password': password
-                            },
-                            dataType: 'json',
-                            success: response => {
-                                if (response.valid) {
-                                    alert('Registration Successful');
-                                }
-                                else {
-                                    $('#register-username-feedback').html('Username already exists');
-                                    args['username'].removeClass('is-valid');
-                                    args['username'].addClass('is-invalid');
-                                }
-                            },
-                            error: () => {
-                                alert('An unknown error occurred, the server might be down temporarily');
+                        let username = '' + args['username'].val();
+                        let email = '' + args['email'].val();
+                        let password = '' + args['password'].val();
+                        register({ username, email, password })
+                        .unwrap()
+                        .then(response => {
+                            if (response.valid) {
+                                alert('Registration Successful');
+                                dispatch(setLoginCredentials({ username, password }))
                             }
+                            else {
+                                $('#register-username-feedback').html('Username already exists');
+                                args['username'].removeClass('is-valid');
+                                args['username'].addClass('is-invalid');
+                            }
+                        })
+                        .catch(error => {
+                            alert('An unknown error occurred, the server might be down temporarily');
+                            console.log(error);
                         });
                     }
                 });
@@ -122,32 +119,20 @@ const LoginBase: React.FC = props => {
                         }
                     },
                     onValid: args => {
-                        let username = args['username'].val();
-                        let password = args['password'].val();
-                        $.ajax({
-                            url: SERVER_ADDRESS + '/login',
-                            data: {
-                                'username': username,
-                                'password': password
-                            },
-                            dataType: 'json',
-                            success: response => {
-                                if (response.valid) {
-                                    dispatch(setLoginData({
-                                        username: '' + args['username'].val,
-                                        password: '' + args['password'].val,
-                                    }))
-                                }
-                                else {
-                                    args['username'].removeClass('is-valid');
-                                    args['username'].addClass('is-invalid');
-                                    args['password'].removeClass('is-valid');
-                                    args['password'].addClass('is-invalid');
-                                    $('#login-password-feedback').html('Username or Password invalid');
-                                }
-                            },
-                            error: () => {
-                                alert('An unknown error occured, the server might be down temporarily ');
+                        let username = '' + args['username'].val();
+                        let password = '' + args['password'].val();
+                        login({ username, password })
+                        .unwrap()
+                        .then(response => {
+                            if (response.valid) {
+                                dispatch(setLoginCredentials({ username, password }));
+                            }
+                            else {
+                                args['username'].removeClass('is-valid');
+                                args['username'].addClass('is-invalid');
+                                args['password'].removeClass('is-valid');
+                                args['password'].addClass('is-invalid');
+                                $('#login-password-feedback').html('Username or Password invalid');
                             }
                         });
                     }
